@@ -7,7 +7,8 @@ class Counter extends Component
     super()
     this.state ={
       count : 10,
-      i : 1}
+      i : 1,
+    showMe: false}
     //  bool = 'true'
    
    
@@ -53,9 +54,12 @@ class Counter extends Component
     this.setState({
       count: this.state.count - 1
     })
-    if (this.state.count < 1){ 
+    if (this.state.count < 0){ 
       clearInterval(this.timer);
-    this.setState({ count : 0})}
+      // alert('Out of time!')
+      this.setState({ count : 0,
+      showMe: true})
+    }
  }
 
  HandleClickSub()
@@ -75,40 +79,46 @@ HandleClickReset()
  {
   this.setState({
     count: 10,
-    i : 1
+    i : 1,
+    showMe: false
   })
    
  }
 
 render(){
   return(
-    <body>
+   <div id = "page">
+     <section class = "heading">COUNTER</section>
       <div class = "container">
-      <div>
-        Counter
-      </div>
-      <div>
-        {this.state.count}
-      </div>
-      <div>
-        <button onClick = {this.HandleClickAdd}>
-          ADD
+        <div class = "screen">
+          {this.state.count}
+        </div>
+        <div class="control">
+        <button onClick = {this.HandleClickAdd} class="addbtn">
+          +
         </button>
-      </div>
-      <div>
-        <button onClick = {this.HandleClickSub}>
-        SUB</button>
-      </div>
-      <div>
-        <button onClick = {this.HandleClickStart}>
+        <button onClick = {this.HandleClickSub} class="subbtn">
+        -</button>
+       </div>
+        <div>
+        <button onClick = {this.HandleClickStart} class="startstopbtn">
         START/STOP</button>
-      </div>
-      <div>
-        <button onClick = {this.HandleClickReset}>
+        </div>
+        <div>
+        <button onClick = {this.HandleClickReset} class="resetbtn">
         RESET</button>
+       </div>
       </div>
+      {
+      
+        this.state.showMe?<div class = "alert">
+          <p class='txt'>
+        Out of time</p>
+        <button onClick = {this.HandleClickReset} class = "alertbtn">Close</button>
       </div>
-    </body>
+      :null}
+      
+    </div>
   )}
 }
 export default Counter
